@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clyder A. Lamanilao | Virtual Assistant & Operational Specialist</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            900: '#070a12',
+                            800: '#0e1626',
+                            700: '#1b263b',
+                            600: '#2d3d59'
+                        },
+                        brand: {
+                            blue: '#38bdf8',
+                            indigo: '#6366f1',
+                            purple: '#a855f7',
+                            cyan: '#06b6d4',
+                            emerald: '#34d399'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        /* Glassmorphism Utilities */
+        .glass-card {
+            background: rgba(14, 22, 38, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card-hover:hover {
+            border-color: rgba(56, 189, 248, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 35px -10px rgba(56, 189, 248, 0.15);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #070a12;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1b263b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #38bdf8;
+        }
+    </style>
+</head>
+<body class="bg-dark-900 text-slate-100 font-sans antialiased selection:bg-brand-blue selection:text-dark-900 min-h-screen relative overflow-x-hidden">
+
+    <!-- Ambient Glowing Background Orbs -->
+    <div class="fixed top-0 left-1/4 w-[500px] h-[500px] bg-brand-blue/10 rounded-full blur-[130px] pointer-events-none animate-pulse-slow"></div>
+    <div class="fixed bottom-10 right-10 w-[600px] h-[600px] bg-brand-purple/10 rounded-full blur-[160px] pointer-events-none animate-pulse-slow"></div>
+    <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-indigo/5 rounded-full blur-[180px] pointer-events-none"></div>
+
+    <!-- Navigation Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="glass-card rounded-2xl px-6 py-3 flex items-center justify-between border border-white/10 shadow-2xl">
+                <!-- Brand / Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-blue to-brand-purple p-[2px] transition-transform duration-300 group-hover:scale-105">
+                        <div class="w-full h-full bg-dark-900 rounded-[10px] flex items-center justify-center font-extrabold text-transparent bg-clip-text bg-gradient-to-tr from-brand-blue to-brand-purple">
+                            CL
+                        </div>
+                    </div>
+                    <div>
+                        <span class="font-bold text-lg tracking-tight text-white block leading-none">CLYDER</span>
+                        <span class="text-[10px] text-brand-blue font-semibold tracking-widest uppercase block mt-1">Virtual Assistant</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav Items -->
+                <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+                    <a href="#about" class="hover:text-brand-blue transition-colors">About</a>
+                    <a href="#skills" class="hover:text-brand-blue transition-colors">Skills</a>
+                    <a href="#experience" class="hover:text-brand-blue transition-colors">Experience</a>
+                    <a href="#case-studies" class="hover:text-brand-blue transition-colors">Case Studies</a>
+                    <a href="#education" class="hover:text-brand-blue transition-colors">Education</a>
+                </nav>
+
+                <!-- Action Buttons -->
+                <div class="flex items-center gap-3">
+                    <button onclick="openBookingModal()" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm bg-gradient-to-r from-brand-blue to-brand-indigo text-dark-900 hover:brightness-110 transition-all shadow-lg shadow-brand-blue/20">
+                        <i class="ph ph-calendar-check text-lg"></i>
+                        <span>Book a Call</span>
+                    </button>
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtn" class="md:hidden p-2 text-slate-300 hover:text-white focus:outline-none">
+                        <i class="ph ph-list text-2xl" id="menuIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobileMenu" class="hidden md:hidden max-w-7xl mx-auto px-4 pt-2">
+            <div class="glass-card rounded-2xl p-6 flex flex-col gap-4 text-center border border-white/10 shadow-2xl">
+                <a href="#about" onclick="toggleMobileMenu()" class="text-slate-200 font-medium py-2 hover:text-brand-blue">About</a>
+                <a href="#skills" onclick="toggleMobileMenu()" class="text-slate-200 font-medium py-2 hover:text-brand-blue">Skills</a>
+                <a href="#experience" onclick="toggleMobileMenu()" class="text-slate-200 font-medium py-2 hover:text-brand-blue">Experience</a>
+                <a href="#case-studies" onclick="toggleMobileMenu()" class="text-slate-200 font-medium py-2 hover:text-brand-blue">Case Studies</a>
+                <a href="#education" onclick="toggleMobileMenu()" class="text-slate-200 font-medium py-2 hover:text-brand-blue">Education</a>
+                <button onclick="toggleMobileMenu(); openBookingModal()" class="w-full py-3 rounded-xl font-semibold text-sm bg-gradient-to-r from-brand-blue to-brand-indigo text-dark-900 mt-2">
+                    Book a Call
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="pt-28 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+
+        <!-- Hero Section -->
+        <section id="about" class="relative pt-8 pb-4">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Profile Info -->
+                <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
+                    <!-- Status Badge -->
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card border border-brand-blue/30 text-brand-blue text-xs font-semibold tracking-wide uppercase">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span>Available for Remote Opportunities</span>
+                    </div>
+
+                    <!-- Name & Headline -->
+                    <div class="space-y-4">
+                        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                            Clyder A. <br class="hidden sm:inline">
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-indigo to-brand-purple">Lamanilao</span>
+                        </h1>
+                        <p class="text-xl sm:text-2xl font-semibold text-slate-300">
+                            Virtual Assistant &amp; Operational Specialist
+                        </p>
+                        <p class="text-slate-400 max-w-2xl text-base sm:text-lg leading-relaxed">
+                            Bringing 4+ years of cross-functional experience across Sales &amp; Acquisition, Admin Support, Creative Graphic Design, and HR &amp; Guidance Coaching to streamline daily business operations for global teams.
+                        </p>
+                    </div>
+
+                    <!-- Quick Location & Languages Badges -->
+                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
+                        <div class="glass-card px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-300 flex items-center gap-2">
+                            <i class="ph ph-map-pin text-brand-blue text-base"></i>
+                            <span>Philippines (Remote-Ready)</span>
+                        </div>
+                        <div class="glass-card px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-300 flex items-center gap-2">
+                            <i class="ph ph-translate text-brand-purple text-base"></i>
+                            <span>English (Fluent)</span>
+                        </div>
+                        <div class="glass-card px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-300 flex items-center gap-2">
+                            <i class="ph ph-chats text-brand-cyan text-base"></i>
+                            <span>Filipino (Native) | Burmese (Beginner)</span>
+                        </div>
+                    </div>
+
+                    <!-- Call To Action Buttons -->
+                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#experience" class="px-7 py-3.5 rounded-xl font-bold text-sm bg-gradient-to-r from-brand-blue to-brand-indigo text-dark-900 hover:brightness-110 transition-all shadow-xl shadow-brand-blue/20 flex items-center gap-2">
+                            <i class="ph ph-briefcase text-lg"></i>
+                            <span>View Work</span>
+                        </a>
+                        <a href="#contact" class="px-7 py-3.5 rounded-xl font-semibold text-sm glass-card border border-slate-700 hover:border-brand-blue/50 text-slate-200 transition-all flex items-center gap-2">
+                            <i class="ph ph-paper-plane-tilt text-lg text-brand-blue"></i>
+                            <span>Contact Me</span>
+                        </a>
+                        <button onclick="openBookingModal()" class="px-7 py-3.5 rounded-xl font-semibold text-sm glass-card border border-slate-700 hover:border-brand-purple/50 text-slate-200 transition-all flex items-center gap-2">
+                            <i class="ph ph-calendar text-lg text-brand-purple"></i>
+                            <span>Book Call</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Profile Image Card -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative group w-72 sm:w-80">
+                        <!-- Glow Backing -->
+                        <div class="absolute -inset-1 bg-gradient-to-r from-brand-blue via-brand-indigo to-brand-purple rounded-3xl blur-xl opacity-50 group-hover:opacity-80 transition duration-500"></div>
+                        
+                        <div class="relative glass-card p-4 rounded-3xl border border-white/10 overflow-hidden">
+                            <img src="https://lh3.googleusercontent.com/gg/AJWXcNeKOHcDlRuYXM_z8A3pr4OP-XU38gsKg3LNCcU-G9RHCefHgECUjIrc_CkipqTL4ewgyxOr5aJqPZ1t2cunchhg08MJAwNmNCK9-C4vbT7S1QPYobzWQ1JTQDiQjDSSWnNlBqbumH5ZgrSC6yf-e_fsr1JEX9FiFkOFI7td63ko3cT9XmoKXBR3gYdBfskFRXBjA2iG91SgR32UJw5-mNlOk6-DxRPIvlV9ocFOlnyDKL-CcpZ-M82mxA4ujr2yD0EsVP9_BA_pH1xJSVoxCKNk-q9ewOnJzg=s0" alt="Clyder A. Lamanilao Profile" class="w-full h-80 sm:h-96 object-cover rounded-2xl shadow-inner">
+                            
+                            <!-- Overlay Floating Card -->
+                            <div class="absolute bottom-8 left-8 right-8 glass-card p-3.5 rounded-xl border border-white/20 shadow-2xl flex items-center justify-between">
+                                <div>
+                                    <p class="text-xs font-bold text-white">4+ Years Combined Experience</p>
+                                    <p class="text-[10px] text-brand-blue">Virtual Assistant &amp; Specialist</p>
+                                </div>
+                                <div class="w-8 h-8 rounded-full bg-brand-blue/20 flex items-center justify-center text-brand-blue">
+                                    <i class="ph ph-check-circle text-lg"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Quick Metrics Highlight Bar -->
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="glass-card p-5 rounded-2xl border border-white/5 text-center sm:text-left hover:border-brand-blue/30 transition-all">
+                    <p class="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-cyan">4+ Years</p>
+                    <p class="text-xs text-slate-400 font-medium mt-1">Cross-Functional Experience</p>
+                </div>
+                <div class="glass-card p-5 rounded-2xl border border-white/5 text-center sm:text-left hover:border-brand-indigo/30 transition-all">
+                    <p class="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-brand-indigo to-brand-purple">25%+</p>
+                    <p class="text-xs text-slate-400 font-medium mt-1">Lapsed Account Reactivation</p>
+                </div>
+                <div class="glass-card p-5 rounded-2xl border border-white/5 text-center sm:text-left hover:border-brand-purple/30 transition-all">
+                    <p class="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-brand-purple to-pink-500">100%</p>
+                    <p class="text-xs text-slate-400 font-medium mt-1">AI Data Accuracy &amp; Privacy</p>
+                </div>
+                <div class="glass-card p-5 rounded-2xl border border-white/5 text-center sm:text-left hover:border-emerald-400/30 transition-all">
+                    <p class="text-2xl sm:text-3xl font-extrabold text-emerald-400">Psychology</p>
+                    <p class="text-xs text-slate-400 font-medium mt-1">BS Graduate (Empathy &amp; EQ)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Role Filter Section -->
+        <section class="space-y-6">
+            <div class="text-center max-w-xl mx-auto space-y-2">
+                <h2 class="text-xs font-bold text-brand-blue uppercase tracking-widest">Tailored Experience</h2>
+                <p class="text-2xl font-bold text-white">Filter Skills &amp; History by Specialty</p>
+                <p class="text-xs text-slate-400">Click a target domain below to filter competencies, work history, and case studies.</p>
+            </div>
+
+            <!-- Role Filter Tabs -->
+            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 pt-2" id="roleFilterTabs">
+                <button data-role="all" class="role-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all border border-brand-blue bg-brand-blue text-dark-900 shadow-lg shadow-brand-blue/20">
+                    All Roles
+                </button>
+                <button data-role="admin" class="role-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold glass-card text-slate-300 border border-slate-700 hover:border-brand-blue hover:text-white transition-all">
+                    Admin &amp; HR
+                </button>
+                <button data-role="sales" class="role-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold glass-card text-slate-300 border border-slate-700 hover:border-brand-blue hover:text-white transition-all">
+                    Sales &amp; CRM
+                </button>
+                <button data-role="design" class="role-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold glass-card text-slate-300 border border-slate-700 hover:border-brand-blue hover:text-white transition-all">
+                    Design &amp; Creative
+                </button>
+                <button data-role="guidance" class="role-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold glass-card text-slate-300 border border-slate-700 hover:border-brand-blue hover:text-white transition-all">
+                    Health &amp; Guidance
+                </button>
+            </div>
+        </section>
+
+        <!-- Skills & Competencies Grid -->
+        <section id="skills" class="space-y-8">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div>
+                    <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i class="ph ph-cpu text-brand-blue"></i>
+                        <span>Core Skills &amp; Competencies</span>
+                    </h3>
+                    <p class="text-xs text-slate-400 mt-1">Versatile technical and interpersonal skill set tailored for high-performance remote teams.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- 1. Sales & Acquisition -->
+                <div class="skill-category-card glass-card glass-card-hover p-6 rounded-2xl space-y-4" data-roles="sales">
+                    <div class="w-12 h-12 rounded-xl bg-brand-blue/10 flex items-center justify-center text-brand-blue">
+                        <i class="ph ph-chart-line-up text-2xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-base">Sales &amp; Acquisition</h4>
+                        <p class="text-xs text-slate-400 mt-1">Lead generation &amp; closing</p>
+                    </div>
+                    <ul class="space-y-2 pt-2">
+                        <li class="text-xs text-slate-300 flex items-center gap-2"><i class="ph ph-check-circle text-brand-blue"></i> Cold &amp; Warm Lead Outreach</li>
+                        <li class="text-xs text-slate-300 flex items-center gap-2"><i class="ph ph-check-circle text-brand-blue"></i> Lifecycle Re-engagement Strategy</li>
+                        <li class="text-xs text-slate-300 flex items-center gap-2"><i class="ph ph-check-circle text-brand-blue"></i> Customer Segmentation &amp; Retention</li>
+                    </ul>
+                </div>
+
+                <!-- 2. Appointment Setting & CRM -->
+                <div class="skill-category-card glass-card glass-card-hover p-6 rounded-2xl space-y-4" data-roles="sales admin">
+                    <div class="w-12 h-12 rounded-xl bg-brand-indigo/10 flex items-center justify-center text-brand-indigo">
+                        <i class="ph ph-calendar-check text-2xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-base">Appointment Setting &amp; CRM</h4>
+                        <p class="text-xs text-slate-400 mt-1">Pipeline &amp; schedule oversight</p>
+                    </div>
+                    <ul class="space-y-2 pt-2">
+                        <li class="text-xs text-slate-300 flex items-center gap-2"><i class="ph ph-check-circle text-brand-indigo"></i> Global Timezone Scheduling</li>
+                        <li class="text-xs text-slate-300 flex items-center gap-2"><i class="ph ph-check-circle text-brand-indigo"></i> CRM Database Maintenance</li>
+                        <li class="text-xs text-slate-300 flex items-center gap-2"><i class="ph ph-check-circle text-brand-indigo"></i> Automated Follow-up Workflows</li>
+                    </ul>
+                </div>
+
+                <!-- 3. Admin Support & Google Workspace -->
+                <div class="skill-category-card glass-card glass-card-hover p-6 rounded-2xl space-y-4" data-roles="admin">
+                    <div class="w-12 h-12 rounded-xl bg-brand-purple/10 flex items-center justify-center text-brand-purple">
+                        <i class="ph ph-folder-open text-2xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-base">Admin Support &amp; Workspace</h4>
+                        <p class="text-xs text-slate-400 mt-1">Document &amp; process control</p>
+                    </div>
+                    <ul class="space-y-2 pt-2">
+                        <li class="text-xs text-slate-300 flex items-center gap-2"><i class="ph ph-check-circle text-brand-purple"></i> Google Docs, Sheets &amp; Drive</li>
+                        <li class="text-xs text-slate-300 flex items-center gap-2"><i class="ph ph-check-circle text-brand-purple"></i> Document Filing &amp; Digital Archives</li>
+                        <li class="text-xs text-slate-300 flex items-center gap-2"><i class="ph ph-check-circle text-brand-purple"></i> Collections &amp; Supplier Follow-ups</li>
+                    </ul>
+                </div>
+
+                <!-- 4. Abstract Graphic Design -->
+                <div class="skill-category-card glass-card glass-card-hover p-6 rounded-2xl space-y-4" data-roles="design">
+                    <div class="w-12 h-12 rounded-xl bg-brand-cyan/10 flex items-center justify-center text-brand-cyan">
+                        <i class="ph ph-palette text-2xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-base">Abstract Graphic Design</h4>
+                        <p class="text-xs text-slate-400 mt-1">Marketing &amp; brand assets</p>
+                    </div>
+                    <ul class="space-y-2 pt-2">
+                        <li class="text-xs text-slate-300 flex items-center gap-2"><i class="ph ph-check-circle text-brand-cyan"></i> Modern Abstract Aesthetics</li>
+                        <li class="text-xs text-slate-300 flex items-center gap-2"><i class="ph ph-check-circle text-brand-cyan"></i> Social Media &amp; Ad Collateral</li>
+                        <li class="text-xs text-slate-300 flex items-center gap-2"><i class="ph ph-check-circle text-brand-cyan"></i> Visual Brand Alignment</li>
+                    </ul>
+                </div>
+
+                <!-- 5. HR Operations & AI Data Processing -->
+                <div class="skill-category-card glass-card glass-card-hover p-6 rounded-2xl space-y-4" data-roles="admin guidance">
+                    <div class="w-12 h-12 rounded-xl bg-brand-emerald/10 flex items-center justify-center text-brand-emerald">
+                        <i class="ph ph-shield-check text-2xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-base">HR &amp; AI Data Processing</h4>
+                        <p class="text-xs text-slate-400 mt-1">Records &amp; high-precision data</p>
+                    </div>
+                    <ul class="space-y-2 pt-2">
+                        <li class="text-xs text-slate-300 flex items-center gap-2"><i class="ph ph-check-circle text-brand-emerald"></i> Confidential Personnel Management</li>
+                        <li class="text-xs text-slate-300 flex items-center gap-2"><i class="ph ph-check-circle text-brand-emerald"></i> AI Data Labeling &amp; Optimization</li>
+                        <li class="text-xs text-slate-300 flex items-center gap-2"><i class="ph ph-check-circle text-brand-emerald"></i> Zero-Error Database Entry</li>
+                    </ul>
+                </div>
+
+                <!-- 6. Health & Fitness Coaching -->
+                <div class="skill-category-card glass-card glass-card-hover p-6 rounded-2xl space-y-4" data-roles="guidance">
+                    <div class="w-12 h-12 rounded-xl bg-pink-500/10 flex items-center justify-center text-pink-400">
+                        <i class="ph ph-heartbeat text-2xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-base">Health &amp; Guidance Coaching</h4>
+                        <p class="text-xs text-slate-400 mt-1">Empathetic care &amp; wellness</p>
+                    </div>
+                    <ul class="space-y-2 pt-2">
+                        <li class="text-xs text-slate-300 flex items-center gap-2"><i class="ph ph-check-circle text-pink-400"></i> Active Listening &amp; Counseling</li>
+                        <li class="text-xs text-slate-300 flex items-center gap-2"><i class="ph ph-check-circle text-pink-400"></i> Personalized Wellness Strategies</li>
+                        <li class="text-xs text-slate-300 flex items-center gap-2"><i class="ph ph-check-circle text-pink-400"></i> Habit &amp; Progress Accountability</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Work Experience Timeline Section -->
+        <section id="experience" class="space-y-8">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div>
+                    <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i class="ph ph-briefcase text-brand-blue"></i>
+                        <span>Work Experience Timeline</span>
+                    </h3>
+                    <p class="text-xs text-slate-400 mt-1">Detailed breakdown of key roles and achievements over the past 4+ years.</p>
+                </div>
+            </div>
+
+            <div class="space-y-6 relative before:absolute before:inset-0 before:left-3 md:before:left-1/2 before:-ml-px before:w-0.5 before:bg-gradient-to-b before:from-brand-blue before:via-brand-indigo before:to-transparent">
+                
+                <!-- Role 1: Sales Rep -->
+                <div class="timeline-card relative flex flex-col md:flex-row items-center justify-between group" data-roles="sales">
+                    <div class="flex items-center w-full md:w-1/2 md:pr-8 mb-4 md:mb-0 md:text-right">
+                        <div class="glass-card glass-card-hover p-6 rounded-2xl w-full border border-white/5 space-y-3">
+                            <div class="flex items-center justify-between md:flex-row-reverse gap-2">
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-brand-blue/10 text-brand-blue border border-brand-blue/20">2 Years Remote</span>
+                                <h4 class="text-base font-bold text-white">Sales Representative &amp; Acquisition Specialist (VA)</h4>
+                            </div>
+                            <p class="text-xs text-slate-400 font-medium">Virtual Assistant Services — International Clients</p>
+                            <ul class="text-xs text-slate-300 space-y-2 text-left pt-2">
+                                <li class="flex items-start gap-2">
+                                    <i class="ph ph-caret-right text-brand-blue mt-0.5 flex-shrink-0"></i>
+                                    <span>Managed end-to-end client acquisition pipelines, lead qualification, cold/warm outreach, and deal closing.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="ph ph-caret-right text-brand-blue mt-0.5 flex-shrink-0"></i>
+                                    <span>Handled high-volume appointment setting and calendar coordination across multiple global timezones.</span>
+                                </li>
+                                <li class="flex items-start gap-2 font-semibold text-brand-blue">
+                                    <i class="ph ph-trophy text-brand-blue mt-0.5 flex-shrink-0"></i>
+                                    <span>Executed a re-engagement framework that reactivated over 25% of an inactive member base, driving repeat sales.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="absolute left-3 md:left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-dark-900 border-2 border-brand-blue flex items-center justify-center z-10">
+                        <div class="w-2 h-2 rounded-full bg-brand-blue"></div>
+                    </div>
+                    <div class="w-full md:w-1/2 md:pl-8"></div>
+                </div>
+
+                <!-- Role 2: Graphic Designer -->
+                <div class="timeline-card relative flex flex-col md:flex-row items-center justify-between group" data-roles="design">
+                    <div class="w-full md:w-1/2 md:pr-8"></div>
+                    <div class="absolute left-3 md:left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-dark-900 border-2 border-brand-indigo flex items-center justify-center z-10">
+                        <div class="w-2 h-2 rounded-full bg-brand-indigo"></div>
+                    </div>
+                    <div class="flex items-center w-full md:w-1/2 md:pl-8">
+                        <div class="glass-card glass-card-hover p-6 rounded-2xl w-full border border-white/5 space-y-3">
+                            <div class="flex items-center justify-between gap-2">
+                                <h4 class="text-base font-bold text-white">Lead Marketing &amp; Sales Graphic Designer (VA)</h4>
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-brand-indigo/10 text-brand-indigo border border-brand-indigo/20">1 Year Creative VA</span>
+                            </div>
+                            <p class="text-xs text-slate-400 font-medium">Digital Sales &amp; Branding Campaigns</p>
+                            <ul class="text-xs text-slate-300 space-y-2 text-left pt-2">
+                                <li class="flex items-start gap-2">
+                                    <i class="ph ph-caret-right text-brand-indigo mt-0.5 flex-shrink-0"></i>
+                                    <span>Conceptualized and produced eye-catching marketing assets specializing in modern abstract styles.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="ph ph-caret-right text-brand-indigo mt-0.5 flex-shrink-0"></i>
+                                    <span>Designed high-converting social media collateral, email banners, ad graphics, and brand materials.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="ph ph-caret-right text-brand-indigo mt-0.5 flex-shrink-0"></i>
+                                    <span>Maintained consistent visual identity and brand alignment across consumer-facing channels.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Role 3: Guidance Coach & HR -->
+                <div class="timeline-card relative flex flex-col md:flex-row items-center justify-between group" data-roles="admin guidance">
+                    <div class="flex items-center w-full md:w-1/2 md:pr-8 mb-4 md:mb-0 md:text-right">
+                        <div class="glass-card glass-card-hover p-6 rounded-2xl w-full border border-white/5 space-y-3">
+                            <div class="flex items-center justify-between md:flex-row-reverse gap-2">
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-brand-purple/10 text-brand-purple border border-brand-purple/20">2024 – 2025</span>
+                                <h4 class="text-base font-bold text-white">Guidance Coach &amp; HR Administrative Specialist</h4>
+                            </div>
+                            <p class="text-xs text-slate-400 font-medium">Rehabilitation Center &amp; AI Machine Learning Operations</p>
+                            <ul class="text-xs text-slate-300 space-y-2 text-left pt-2">
+                                <li class="flex items-start gap-2">
+                                    <i class="ph ph-caret-right text-brand-purple mt-0.5 flex-shrink-0"></i>
+                                    <span>Facilitated 1-on-1 recovery coaching, coping strategies, and wellness plans in a rehab setting.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="ph ph-caret-right text-brand-purple mt-0.5 flex-shrink-0"></i>
+                                    <span>Managed HR operations including employee onboarding, personnel records, and policy execution.</span>
+                                </li>
+                                <li class="flex items-start gap-2 font-semibold text-brand-purple">
+                                    <i class="ph ph-check-square-offset text-brand-purple mt-0.5 flex-shrink-0"></i>
+                                    <span>Supported AI labeling and data optimization for machine learning models with high precision.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="absolute left-3 md:left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-dark-900 border-2 border-brand-purple flex items-center justify-center z-10">
+                        <div class="w-2 h-2 rounded-full bg-brand-purple"></div>
+                    </div>
+                    <div class="w-full md:w-1/2 md:pl-8"></div>
+                </div>
+
+                <!-- Role 4: Fitness & Wellness Coach -->
+                <div class="timeline-card relative flex flex-col md:flex-row items-center justify-between group" data-roles="guidance">
+                    <div class="w-full md:w-1/2 md:pr-8"></div>
+                    <div class="absolute left-3 md:left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-dark-900 border-2 border-brand-emerald flex items-center justify-center z-10">
+                        <div class="w-2 h-2 rounded-full bg-brand-emerald"></div>
+                    </div>
+                    <div class="flex items-center w-full md:w-1/2 md:pl-8">
+                        <div class="glass-card glass-card-hover p-6 rounded-2xl w-full border border-white/5 space-y-3">
+                            <div class="flex items-center justify-between gap-2">
+                                <h4 class="text-base font-bold text-white">Fitness &amp; Wellness Coach</h4>
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-brand-emerald/10 text-brand-emerald border border-brand-emerald/20">1 Year Remote / On-Site</span>
+                            </div>
+                            <p class="text-xs text-slate-400 font-medium">Personal Client Health &amp; Accountability</p>
+                            <ul class="text-xs text-slate-300 space-y-2 text-left pt-2">
+                                <li class="flex items-start gap-2">
+                                    <i class="ph ph-caret-right text-brand-emerald mt-0.5 flex-shrink-0"></i>
+                                    <span>Designed tailored physical fitness routines, habit-building strategies, and nutritional guidance.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="ph ph-caret-right text-brand-emerald mt-0.5 flex-shrink-0"></i>
+                                    <span>Provided 1-on-1 coaching, accountability tracking, and motivational support for wellness goals.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Highlighted Case Studies Section -->
+        <section id="case-studies" class="space-y-8">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div>
+                    <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i class="ph ph-star text-brand-blue"></i>
+                        <span>Highlighted Case Studies &amp; Problem Solving</span>
+                    </h3>
+                    <p class="text-xs text-slate-400 mt-1">Structured problem-solving examples highlighting personal initiative and measured outcomes.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Case Study 1 -->
+                <div class="case-study-card glass-card p-6 rounded-2xl border border-white/10 space-y-5 flex flex-col justify-between" data-roles="sales">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-brand-blue/10 text-brand-blue border border-brand-blue/20">Sales &amp; Retention</span>
+                            <span class="text-xl font-black text-brand-blue">&gt; 25%</span>
+                        </div>
+                        <h4 class="text-base font-bold text-white">Member Re-Engagement &amp; Sales Activation</h4>
+                        <div class="space-y-2.5 text-xs text-slate-300">
+                            <p><strong class="text-brand-blue">Challenge:</strong> A growing segment of inactive members had stopped placing repeat orders, and broad marketing blasts were ineffective.</p>
+                            <p><strong class="text-brand-blue">Action:</strong> Audited accounts, segmented members by past purchasing habits, and conducted personalized, empathetic outreach focused on specific needs.</p>
+                        </div>
+                    </div>
+                    <div class="bg-emerald-950/30 p-3 rounded-xl border border-emerald-800/40 text-xs font-semibold text-emerald-300">
+                        Result: Reactivated over 25% of inactive members, directly boosting recurring revenue.
+                    </div>
+                </div>
+
+                <!-- Case Study 2 -->
+                <div class="case-study-card glass-card p-6 rounded-2xl border border-white/10 space-y-5 flex flex-col justify-between" data-roles="guidance admin">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-brand-purple/10 text-brand-purple border border-brand-purple/20">Health &amp; Guidance</span>
+                            <span class="text-xl font-black text-brand-purple">100%</span>
+                        </div>
+                        <h4 class="text-base font-bold text-white">Rehab Center Confidential Support &amp; Crisis Care</h4>
+                        <div class="space-y-2.5 text-xs text-slate-300">
+                            <p><strong class="text-brand-purple">Challenge:</strong> Navigating high-stress situations and communicating effectively with individuals dealing with mental health struggles.</p>
+                            <p><strong class="text-brand-purple">Action:</strong> Leveraged Psychology background for active listening and de-escalation while keeping meticulous, confidential records for care plans.</p>
+                        </div>
+                    </div>
+                    <div class="bg-emerald-950/30 p-3 rounded-xl border border-emerald-800/40 text-xs font-semibold text-emerald-300">
+                        Result: Significantly reduced distress incidents and maintained total record privacy.
+                    </div>
+                </div>
+
+                <!-- Case Study 3 -->
+                <div class="case-study-card glass-card p-6 rounded-2xl border border-white/10 space-y-5 flex flex-col justify-between" data-roles="admin">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-brand-emerald/10 text-brand-emerald border border-brand-emerald/20">AI &amp; Data Admin</span>
+                            <span class="text-xl font-black text-brand-emerald">Zero-Error</span>
+                        </div>
+                        <h4 class="text-base font-bold text-white">High-Precision AI Data Processing &amp; Upkeep</h4>
+                        <div class="space-y-2.5 text-xs text-slate-300">
+                            <p><strong class="text-brand-emerald">Challenge:</strong> Processing high volumes of complex data and labeling for machine learning models without accuracy drop-offs.</p>
+                            <p><strong class="text-brand-emerald">Action:</strong> Implemented structured validation checklists and methodical review loops across Google Sheets and specialized tools.</p>
+                        </div>
+                    </div>
+                    <div class="bg-emerald-950/30 p-3 rounded-xl border border-emerald-800/40 text-xs font-semibold text-emerald-300">
+                        Result: Maintained impeccable data precision and zero-error standards across processing tasks.
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Education & Credentials Section -->
+        <section id="education" class="space-y-8">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div>
+                    <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i class="ph ph-graduation-cap text-brand-blue"></i>
+                        <span>Education &amp; Academic Background</span>
+                    </h3>
+                    <p class="text-xs text-slate-400 mt-1">Dual academic foundation providing human behavior insights and high operational discipline.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Degree 1 -->
+                <div class="glass-card glass-card-hover p-6 rounded-2xl border border-white/5 space-y-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-2xl bg-brand-blue/10 flex items-center justify-center text-brand-blue flex-shrink-0">
+                            <i class="ph ph-brain text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white text-base">BS in Psychology</h4>
+                            <p class="text-xs text-brand-blue font-semibold">Misamis University</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Proactive task management, client counseling skills, emotional resilience, active listening, and human communication dynamics.
+                    </p>
+                </div>
+
+                <!-- Degree 2 -->
+                <div class="glass-card glass-card-hover p-6 rounded-2xl border border-white/5 space-y-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-2xl bg-brand-purple/10 flex items-center justify-center text-brand-purple flex-shrink-0">
+                            <i class="ph ph-compass text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white text-base">BS in Marine Transportation</h4>
+                            <p class="text-xs text-brand-purple font-semibold">Misamis Institute of Technology</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Strict protocol adherence, resource planning, precise documentation, and high-pressure operational execution.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="space-y-8">
+            <div class="glass-card p-8 sm:p-12 rounded-3xl border border-white/10 relative overflow-hidden">
+                <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-brand-blue/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                    
+                    <!-- Left Contact Info -->
+                    <div class="lg:col-span-5 space-y-6">
+                        <div class="space-y-2">
+                            <span class="text-xs font-bold text-brand-blue uppercase tracking-widest">Get In Touch</span>
+                            <h3 class="text-3xl font-extrabold text-white">Let’s Connect</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                Ready to optimize your operations, schedule appointments, or manage admin workflows? Send a message directly below.
+                            </p>
+                        </div>
+
+                        <div class="space-y-3 pt-2">
+                            <div class="flex items-center gap-4 p-3.5 rounded-xl bg-dark-900/60 border border-slate-800">
+                                <div class="w-10 h-10 rounded-lg bg-brand-blue/10 flex items-center justify-center text-brand-blue">
+                                    <i class="ph ph-envelope-simple text-xl"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-[10px] text-slate-400 font-semibold">Email Address</p>
+                                    <p class="text-xs font-bold text-white truncate">lamanilaoclyder@gmail.com</p>
+                                </div>
+                                <button onclick="copyContactInfo('lamanilaoclyder@gmail.com', 'Email copied to clipboard!')" class="p-2 text-slate-400 hover:text-brand-blue transition-colors">
+                                    <i class="ph ph-copy text-lg"></i>
+                                </button>
+                            </div>
+
+                            <div class="flex items-center gap-4 p-3.5 rounded-xl bg-dark-900/60 border border-slate-800">
+                                <div class="w-10 h-10 rounded-lg bg-brand-indigo/10 flex items-center justify-center text-brand-indigo">
+                                    <i class="ph ph-phone text-xl"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-[10px] text-slate-400 font-semibold">Phone / Mobile</p>
+                                    <p class="text-xs font-bold text-white truncate">09512340014</p>
+                                </div>
+                                <button onclick="copyContactInfo('09512340014', 'Phone number copied!')" class="p-2 text-slate-400 hover:text-brand-indigo transition-colors">
+                                    <i class="ph ph-copy text-lg"></i>
+                                </button>
+                            </div>
+
+                            <div class="flex items-center gap-4 p-3.5 rounded-xl bg-dark-900/60 border border-slate-800">
+                                <div class="w-10 h-10 rounded-lg bg-brand-purple/10 flex items-center justify-center text-brand-purple">
+                                    <i class="ph ph-globe text-xl"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-[10px] text-slate-400 font-semibold">Location &amp; Workstyle</p>
+                                    <p class="text-xs font-bold text-white">Philippines (Full-Time Remote)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Form -->
+                    <div class="lg:col-span-7">
+                        <form id="contactForm" onsubmit="handleFormSubmit(event)" class="space-y-4 bg-dark-900/80 p-6 sm:p-8 rounded-2xl border border-slate-800">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="space-y-1">
+                                    <label class="text-[11px] font-bold text-slate-300">Your Name</label>
+                                    <input type="text" required placeholder="Jane Doe" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-blue transition-colors">
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-[11px] font-bold text-slate-300">Email Address</label>
+                                    <input type="email" required placeholder="jane@company.com" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-blue transition-colors">
+                                </div>
+                            </div>
+
+                            <div class="space-y-1">
+                                <label class="text-[11px] font-bold text-slate-300">Role / Inquiries</label>
+                                <select class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-xs text-slate-300 focus:outline-none focus:border-brand-blue transition-colors">
+                                    <option>Admin Associate / Support</option>
+                                    <option>Sales Rep &amp; Appointment Setter</option>
+                                    <option>Medical Virtual Assistant</option>
+                                    <option>Graphic Designer / Creative VA</option>
+                                    <option>Other Opportunity</option>
+                                </select>
+                            </div>
+
+                            <div class="space-y-1">
+                                <label class="text-[11px] font-bold text-slate-300">Message</label>
+                                <textarea rows="4" required placeholder="Tell me about your team or project requirements..." class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-blue transition-colors resize-none"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full py-3.5 rounded-xl font-bold text-xs bg-gradient-to-r from-brand-blue to-brand-indigo text-dark-900 hover:brightness-110 transition-all shadow-lg shadow-brand-blue/20 flex items-center justify-center gap-2">
+                                <i class="ph ph-paper-plane text-base"></i>
+                                <span>Send Message</span>
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/80 py-8 bg-dark-900/50 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+            <p>© 2026 Clyder A. Lamanilao. All rights reserved.</p>
+            <div class="flex items-center gap-6">
+                <span>Virtual Assistant Portfolio</span>
+                <span>•</span>
+                <span>Philippines</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="glass-card max-w-md w-full p-6 sm:p-8 rounded-3xl border border-white/20 relative space-y-6 transform scale-95 transition-transform duration-300" id="bookingModalContent">
+            <button onclick="closeBookingModal()" class="absolute top-4 right-4 p-2 text-slate-400 hover:text-white">
+                <i class="ph ph-x text-xl"></i>
+            </button>
+
+            <div class="text-center space-y-2">
+                <div class="w-12 h-12 rounded-2xl bg-brand-blue/10 text-brand-blue flex items-center justify-center mx-auto">
+                    <i class="ph ph-calendar-plus text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white">Book an Interview / Call</h3>
+                <p class="text-xs text-slate-400">Reach out directly or send an email invite to schedule a meeting.</p>
+            </div>
+
+            <div class="space-y-3 text-xs">
+                <div class="p-4 rounded-2xl bg-dark-900/80 border border-slate-800 space-y-2">
+                    <p class="font-bold text-white flex items-center gap-2">
+                        <i class="ph ph-clock text-brand-blue"></i>
+                        <span>Direct Booking Contacts</span>
+                    </p>
+                    <p class="text-slate-300">Email: <strong class="text-white">lamanilaoclyder@gmail.com</strong></p>
+                    <p class="text-slate-300">Phone: <strong class="text-white">09512340014</strong></p>
+                    <p class="text-slate-400 text-[10px]">Flexible across US, UK &amp; AU timezones</p>
+                </div>
+            </div>
+
+            <div class="flex gap-3 pt-2">
+                <button onclick="copyContactInfo('lamanilaoclyder@gmail.com', 'Email copied! Send an invite directly.'); closeBookingModal();" class="flex-1 py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-brand-blue to-brand-indigo text-dark-900 hover:brightness-110 transition-all">
+                    Copy Email Invite
+                </button>
+                <button onclick="closeBookingModal()" class="px-4 py-3 rounded-xl font-semibold text-xs glass-card border border-slate-700 text-slate-300 hover:text-white">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 glass-card px-5 py-3.5 rounded-2xl border border-brand-blue/40 text-xs font-bold text-white shadow-2xl flex items-center gap-3 translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <i class="ph ph-check-circle text-brand-blue text-xl" id="toastIcon"></i>
+        <span id="toastMsg">Notification message</span>
+    </div>
+
+    <!-- Interactive JavaScript Logic -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+            if(mobileMenu.classList.contains('hidden')) {
+                menuIcon.className = 'ph ph-list text-2xl';
+            } else {
+                menuIcon.className = 'ph ph-x text-2xl';
+            }
+        }
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+
+        // Toast Notification System
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            toastMsg.innerText = message;
+            
+            toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+            }, 3000);
+        }
+
+        // Copy Contact Information
+        function copyContactInfo(text, msg) {
+            if(navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast(msg);
+                }).catch(() => {
+                    fallbackCopy(text, msg);
+                });
+            } else {
+                fallbackCopy(text, msg);
+            }
+        }
+
+        function fallbackCopy(text, msg) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            showToast(msg);
+        }
+
+        // Interactive Role Filter Switcher
+        const filterBtns = document.querySelectorAll('.role-btn');
+        const skillCards = document.querySelectorAll('.skill-category-card');
+        const timelineCards = document.querySelectorAll('.timeline-card');
+        const caseStudyCards = document.querySelectorAll('.case-study-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const selectedRole = btn.getAttribute('data-role');
+
+                // Update tab buttons styling
+                filterBtns.forEach(b => {
+                    b.className = 'role-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold glass-card text-slate-300 border border-slate-700 hover:border-brand-blue hover:text-white transition-all';
+                });
+                btn.className = 'role-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all border border-brand-blue bg-brand-blue text-dark-900 shadow-lg shadow-brand-blue/20';
+
+                // Helper filter function
+                const filterElements = (elements) => {
+                    elements.forEach(card => {
+                        const roles = card.getAttribute('data-roles').split(' ');
+                        if(selectedRole === 'all' || roles.includes(selectedRole)) {
+                            card.style.display = '';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                };
+
+                filterElements(skillCards);
+                filterElements(timelineCards);
+                filterElements(caseStudyCards);
+            });
+        });
+
+        // Booking Modal Logic
+        const bookingModal = document.getElementById('bookingModal');
+        const bookingModalContent = document.getElementById('bookingModalContent');
+
+        function openBookingModal() {
+            bookingModal.classList.remove('hidden');
+            setTimeout(() => {
+                bookingModal.classList.remove('opacity-0');
+                bookingModalContent.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeBookingModal() {
+            bookingModal.classList.add('opacity-0');
+            bookingModalContent.classList.add('scale-95');
+            setTimeout(() => {
+                bookingModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Contact Form Submission
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            showToast("Message sent successfully! I will reply shortly.");
+            e.target.reset();
+        }
+
+        // Navbar adjustment on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if(window.scrollY > 50) {
+                navbar.classList.add('py-2');
+            } else {
+                navbar.classList.remove('py-2');
+            }
+        });
+    </script>
+</body>
+</html>
